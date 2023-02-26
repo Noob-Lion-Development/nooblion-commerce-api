@@ -16,5 +16,7 @@ namespace nooblion_commerce_api.Data
         }
         //DbSet<MODEL> fields are checked by entity framework and each represent their own respective table within the database
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }
