@@ -1,8 +1,12 @@
-﻿namespace nooblion_commerce_api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace nooblion_commerce_api.Models
 {
     public class Order
     {
         public int Id { get; set; }
+
+        [Column(TypeName="Date")]
         public DateTime OrderCompleted { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
