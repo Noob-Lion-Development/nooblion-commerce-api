@@ -1,13 +1,19 @@
-﻿namespace nooblion_commerce_api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace nooblion_commerce_api.Models
 {
     public class OrderItem
     {
         //Look up table that stores purchased items and which order it was purchased under
         public int Id { get; set; }
+
+        [ForeignKey("Product")]
         public required int ProductId { get; set; } //FK
-        public required Product Product { get; set; }
+
+
+        [ForeignKey("Order")]
         public required int OrderId { get; set; }
-        public required Order Order { get; set; }
+
         public required int Quantity { get; set; }
     }
 }
