@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using nooblion_commerce_api.Data;
+using nooblion_commerce_api.DataObjects;
 using nooblion_commerce_api.Models;
 
 namespace nooblion_commerce_api.Controllers
@@ -29,7 +30,7 @@ namespace nooblion_commerce_api.Controllers
           {
               return NotFound();
           }
-            return await _context.OrderItems.ToListAsync();
+            return await _context.OrderItems.Include(x => x.Order).Include(x => x.Product).ToListAsync();
         }
 
         // GET: api/OrderItems/5
@@ -84,12 +85,19 @@ namespace nooblion_commerce_api.Controllers
         // POST: api/OrderItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItemObj orderItemObj)
         {
           if (_context.OrderItems == null)
           {
               return Problem("Entity set 'Context.OrderItems'  is null.");
           }
+
+            var orderItem = new OrderItem()
+            {
+                ProductId = orderItemObj.productId,
+                OrderId = orderItemObj.orderId,
+                Quantity = orderItemObj.quantity,
+            };
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
