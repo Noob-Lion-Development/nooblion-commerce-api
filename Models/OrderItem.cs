@@ -7,6 +7,7 @@ namespace nooblion_commerce_api.Models
         //Look up table that stores purchased items and which order it was purchased under
         public int Id { get; set; }
 
+        //test
         [ForeignKey("Product")]
         public required int ProductId { get; set; } //FK
 
