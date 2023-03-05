@@ -25,10 +25,10 @@ namespace nooblion_commerce_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-          if (_context.Orders == null)
-          {
-              return NotFound();
-          }
+            if (_context.Orders == null)
+            {
+                return NotFound();
+            }
             return await _context.Orders.ToListAsync();
         }
 
