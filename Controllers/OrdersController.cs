@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using nooblion_commerce_api.Data;
+using nooblion_commerce_api.DataObjects;
 using nooblion_commerce_api.Models;
 
 namespace nooblion_commerce_api.Controllers
@@ -23,13 +24,18 @@ namespace nooblion_commerce_api.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<ActionResult<OrdersViewModel>> GetOrders()
         {
             if (_context.Orders == null)
             {
                 return NotFound();
             }
-            return await _context.Orders.ToListAsync();
+            OrdersViewModel orderVM = new OrdersViewModel()
+            {
+                Orders = await _context.Orders.ToListAsync(),
+                OrderItems = await _context.OrderItems.Include(x => x.Product).ToListAsync(),
+            };
+            return orderVM;
         }
 
         // GET: api/Orders/5
